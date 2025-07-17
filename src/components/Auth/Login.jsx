@@ -14,7 +14,7 @@ const Login = () => {
 
   return (
     <div className="flex h-screen w-screen items-center justify-center">
-      <div className="border-2 rounded-xl border-emerald-600 p-20">
+      <div className="border-2 rounded-xl border-emerald-600 p-20 md:w-1/3 w-4/5">
         <form className="flex flex-col items-center justify-center">
           <input
             value={email}
