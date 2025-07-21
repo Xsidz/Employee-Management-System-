@@ -1,9 +1,23 @@
-import React from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import React, { useState,useEffect, createContext } from "react";
+import { getLocalStorage } from "../utils/localStorage";
+export const AuthContext = createContext();
+const AuthProvider = ({ children }) => {
+  const [userData, setuserData] = useState(null);
 
-const AuthProvider = ({children}) => {
-  return (
-    <div>{children}</div>
-  )
-}
+  useEffect(() => {
+    const { employees, admin } = getLocalStorage();
+    setuserData({ employees, admin });
+  }, []);
 
-export default AuthProvider
+  return <div>
+
+
+    <AuthContext.Provider value={userData}>
+        {children}
+    </AuthContext.Provider>
+
+  </div>;
+};
+
+export default AuthProvider;
