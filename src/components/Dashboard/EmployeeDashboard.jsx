@@ -3,15 +3,15 @@ import Header from '../other/Header'
 import TaskListCount from '../other/TaskListCount'
 import TaskList from '../../TaskList/TaskList'
 
-const EmployeeDashboard = ({data}) => {
+const EmployeeDashboard = ({data,logout}) => {
 
   return (
     <>
     <div className='p-10 bg-[#1C1C1C1C]'>
       
-      <Header/>
-      <TaskListCount/>
-      <TaskList/>
+      <Header data={data} logout={logout} />
+      <TaskListCount data={data}/>
+      <TaskList data={data}/>
     </div>
     </>
   )
