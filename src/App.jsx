@@ -6,39 +6,32 @@ import { setLocalStorage } from "./utils/localStorage.jsx";
 import { AuthContext } from "./context/AuthProvider.jsx";
 
 const App = () => {
-  
   const [currentUser, setCurrentUser] = useState(null);
   const authData = useContext(AuthContext);
 
-  
   useEffect(() => {
-    
     if (!localStorage.getItem("employees")) {
-        setLocalStorage();
+      setLocalStorage();
     }
-    
+
     const storedUserJSON = localStorage.getItem("loggedInUser");
     if (storedUserJSON && authData) {
       const storedUser = JSON.parse(storedUserJSON);
-      
-      
+
       let fullUserData;
-      if (storedUser.role === 'admin') {
-        fullUserData = authData.admin.find(a => a.id === storedUser.id);
+      if (storedUser.role === "admin") {
+        fullUserData = authData.admin.find((a) => a.id === storedUser.id);
       } else {
-        fullUserData = authData.employees.find(e => e.id === storedUser.id);
+        fullUserData = authData.employees.find((e) => e.id === storedUser.id);
       }
 
-      
       if (fullUserData) {
-        
         setCurrentUser({ ...fullUserData, role: storedUser.role });
       } else {
-        
         localStorage.removeItem("loggedInUser");
       }
     }
-  }, [authData]); 
+  }, [authData]);
 
   const handelLogin = (email, password) => {
     if (!authData) return;
@@ -48,21 +41,20 @@ const App = () => {
       (e) => e.email === email && password === e.password
     );
     if (admin) {
-      const adminWithRole = { ...admin, role: 'admin' };
+      const adminWithRole = { ...admin, role: "admin" };
       setCurrentUser(adminWithRole);
-      
+
       localStorage.setItem("loggedInUser", JSON.stringify(adminWithRole));
       return;
     }
 
-   
     const employee = authData.employees.find(
       (e) => e.email === email && e.password === e.password
     );
     if (employee) {
-      const employeeWithRole = { ...employee, role: 'employee' };
+      const employeeWithRole = { ...employee, role: "employee" };
       setCurrentUser(employeeWithRole);
-      
+
       localStorage.setItem("loggedInUser", JSON.stringify(employeeWithRole));
     } else {
       alert("Invalid credentials. Please try again.");
@@ -73,23 +65,26 @@ const App = () => {
     setCurrentUser(null);
     localStorage.removeItem("loggedInUser");
   };
-
   
+
   if (!currentUser) {
     return <Login handelLogin={handelLogin} />;
   }
 
   if (currentUser.role === "admin") {
-    
-    return <AdminDashboard data={currentUser} logout={handleLogout} />;
+    return (
+      <AdminDashboard
+        data={currentUser}
+        users={authData}
+        logout={handleLogout}
+      />
+    );
   }
-  
+
   if (currentUser.role === "employee") {
-    
     return <EmployeeDashboard data={currentUser} logout={handleLogout} />;
   }
 
- 
   return <Login handelLogin={handelLogin} />;
 };
 

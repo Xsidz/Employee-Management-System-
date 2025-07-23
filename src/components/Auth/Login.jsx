@@ -22,7 +22,7 @@ const Login = ({handelLogin}) => {
               setEmail(e.target.value);
             }}
             required
-            className="text-black outline-none bg-transparent border-2 border-emerald-600 text-xl py-3 px-5 rounded-full placeholder:text-gray-400"
+            className="text-white outline-none bg-transparent border-2 border-emerald-600 text-xl py-3 px-5 rounded-full placeholder:text-gray-400"
             type="email"
             placeholder="Enter Your Email"
           />
@@ -32,7 +32,7 @@ const Login = ({handelLogin}) => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            className="text-black outline-none bg-transparent border-2 border-emerald-600 text-xl py-3 px-5 rounded-full mt-3 placeholder:text-gray-400"
+            className="text-white outline-none bg-transparent border-2 border-emerald-600 text-xl py-3 px-5 rounded-full mt-3 placeholder:text-gray-400"
             type="password"
             placeholder="Enter Your Password"
           />
